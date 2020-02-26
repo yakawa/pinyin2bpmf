@@ -6,12 +6,13 @@ import (
 	"fmt"
 	"os"
 	"strings"
+	"flag"
 )
 
 var (
-	Version = "0.1.0"
-	Revision = ""
+	Version = ""
 	Commit = ""
+	Date = ""
 )
 
 func next0(s []rune) string {
@@ -36,6 +37,17 @@ func next2(s []rune) string {
 }
 
 func main() {
+	var (
+		printVersion = flag.Bool("version", false, "Print Version")
+		voice = flag.Bool("v", false, "Play Voice")
+	)
+	flag.Parse()
+
+	if *printVersion {
+		fmt.Printf("pinyin2bpmf %s - %s (%s)\n", Version, Commit, Date)
+		return
+	}
+
 	sc := bufio.NewScanner(os.Stdin)
 
 	for sc.Scan() {
@@ -48,9 +60,11 @@ func main() {
 			i += n
 		}
 		fmt.Println(bpmf)
-		err := exec.Command("/usr/bin/say", "-v", "Mei-Jia", bpmf ).Run()
-		if err != nil {
-			fmt.Println(err)
+		if *voice {
+			err := exec.Command("/usr/bin/say", "-v", "Mei-Jia", bpmf ).Run()
+			if err != nil {
+				fmt.Println(err)
+			}
 		}
 	}
 }
