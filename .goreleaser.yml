@@ -1,4 +1,4 @@
-project_name: anywhereQL
+project_name: pinyin2bpmf
 env:
   - GO111MODULE=on
 before:
@@ -6,7 +6,7 @@ before:
     - go mod tidy
 builds:
   - main: .
-    binary: anywhereQL
+    binary: pinyin2bpmf
     ldflags:
       - -s -w
       - -X main.Version={{.Version}}

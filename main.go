@@ -8,6 +8,12 @@ import (
 	"strings"
 )
 
+var (
+	Version = "0.1.0"
+	Revision = ""
+	Commit = ""
+)
+
 func next0(s []rune) string {
 	if len(s) < 1 {
 		return ""
